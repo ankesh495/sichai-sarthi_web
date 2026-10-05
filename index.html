@@ -1,85 +1,138 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Sinchai Sarthi - Smart IoT Agriculture Platform</title>
-<link rel="stylesheet" href="style.css">
-</head>
-<body>
+<html lang="en" data-theme="green"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sichai Sarthi - Smart IoT Agriculture Platform</title>
+<link rel="stylesheet" href="style.css"></head><body>
 
-<!-- LOGIN (dashboard stays hidden until server confirms session) -->
-<section id="login">
-  <form id="loginForm" class="card login-card" autocomplete="on">
-    <h1>🌱 Sinchai Sarthi</h1>
-    <p class="muted">Smart Solar Tracking &amp; Automated Irrigation</p>
-    <input id="u" name="username" placeholder="Username" autocomplete="username" required>
-    <input id="p" name="password" type="password" placeholder="Password" autocomplete="current-password" required>
-    <button class="btn" type="submit">Login</button>
-    <p id="loginErr" class="err"></p>
+<!-- WELCOME PAGE -->
+<section id="home">
+  <nav class="nav">
+    <div class="logo">🌱 <div><b>Sichai Sarthi</b><small>Smart Solar Tracking &amp; Automated Irrigation System</small></div></div>
+    <div class="links"><a>Home</a><a>Features</a><a>About</a><a>Contact</a>
+      <button class="theme-btn" id="themeBtn1" title="Change theme">🎨</button></div>
+  </nav>
+  <div class="hero">
+    <h2>Welcome, Farmer / Student!</h2>
+    <p>Smart Farming | Better Yield | Sustainable Future</p>
+    <div class="info">
+      <div class="box">📅 <div><b id="date">--</b><br><span id="time">--</span><br><small>(Live Date &amp; Time)</small></div></div>
+      <div class="box">🌤️ <div><b id="city">--</b><br><span id="wx">Loading weather...</span><br><small>(Live Weather)</small></div></div>
+    </div>
+    <button class="start" id="start">🚀 Start Dashboard</button>
+    <p class="tag">“Smart Technology for a Greener Tomorrow”</p>
+  </div>
+</section>
+
+<!-- OPTIONAL LOCK (off by default; see LOCK in script.js) -->
+<section id="lock" hidden>
+  <form id="lockForm" class="card lockcard">
+    <h3>🔒 Sichai Sarthi</h3>
+    <input id="lu" placeholder="Username" autocomplete="username">
+    <input id="lp" type="password" placeholder="Password" autocomplete="current-password">
+    <button class="btn" type="submit">Login</button><p id="lerr" class="bad"></p>
   </form>
 </section>
 
-<main id="dash" hidden>
-  <header>
-    <h1>🌱 Sinchai Sarthi</h1>
-    <div class="hdr-right">
-      <span id="liveBadge" class="badge off">OFFLINE</span>
-      <button class="btn small ghost" id="logout">Logout</button>
-    </div>
-  </header>
+<!-- DASHBOARD -->
+<div id="app" hidden>
+  <aside id="menu">
+    <h3>🌱 Sichai Sarthi<small>Smart Solar Tracking &amp; Irrigation</small></h3>
+    <button data-s="overview" class="on">🏠 Overview</button>
+    <button data-s="settings">⚙️ Settings</button>
+    <button data-s="sensors">📊 Sensor Readings</button>
+    <button data-s="npk">🧪 NPK Nutrients</button>
+    <button data-s="solar">☀️ Solar Panel Control</button>
+    <button data-s="valve">🚰 Valve / Motor Control</button>
+    <button data-s="history">📈 History</button>
+    <button data-s="notif">🔔 Notifications <i id="nc"></i></button>
+  </aside>
+  <main>
+    <div class="top"><button id="burger">☰</button>
+      <div class="topr"><button class="theme-btn" id="themeBtn2" title="Change theme">🎨</button><span id="badge" class="badge off">OFFLINE</span></div></div>
 
-  <h2>🌡️ Environment</h2>
-  <div class="grid">
-    <div class="card"><h3>Soil Moisture</h3><div class="val" id="soil">--</div></div>
-    <div class="card"><h3>Temperature</h3><div class="val" id="temp">--</div></div>
-    <div class="card"><h3>Humidity</h3><div class="val" id="hum">--</div></div>
-    <div class="card"><h3>Nitrogen (N)</h3><div class="val" id="npkN">N/A</div></div>
-    <div class="card"><h3>Phosphorus (P)</h3><div class="val" id="npkP">N/A</div></div>
-    <div class="card"><h3>Potassium (K)</h3><div class="val" id="npkK">N/A</div></div>
-    <div class="card"><h3>Rain</h3><div class="val" id="rain">--</div></div>
-  </div>
+    <section id="overview" class="sec">
+      <h2>Overview</h2>
+      <div class="grid">
+        <div class="card"><h4>Soil Moisture</h4><b data-k="soil">--</b></div>
+        <div class="card"><h4>Temperature</h4><b data-k="temp">--</b></div>
+        <div class="card"><h4>Humidity</h4><b data-k="hum">--</b></div>
+        <div class="card"><h4>Rain</h4><b data-k="rain">--</b></div>
+        <div class="card"><h4>Water Valve</h4><b data-k="valve">--</b></div>
+        <div class="card"><h4>Motor / Pump</h4><b data-k="pump">--</b></div>
+        <div class="card"><h4>Water Flow</h4><b data-k="flow">--</b></div>
+        <div class="card"><h4>Total Water</h4><b data-k="total">--</b></div>
+        <div class="card"><h4>Solar Up/Down (cmd)</h4><b data-k="v">--</b></div>
+        <div class="card"><h4>Solar Left/Right (cmd)</h4><b data-k="h">--</b></div>
+        <div class="card"><h4>Transmitter (ESP-NOW)</h4><b data-k="espnow">--</b></div>
+        <div class="card"><h4>ESP32 Wi-Fi</h4><b data-k="wifi">--</b></div>
+        <div class="card"><h4>MQTT</h4><b id="mq">--</b></div>
+        <div class="card"><h4>Device Time (RTC)</h4><b data-k="ts" class="sm">--</b></div>
+        <div class="card"><h4>Last Update</h4><b data-k="last" class="sm">--</b></div>
+      </div>
+    </section>
 
-  <h2>🚰 Irrigation</h2>
-  <div class="grid">
-    <div class="card"><h3>Pump</h3><div class="val" id="pump">--</div>
-      <div class="row"><button class="btn" data-t="pump" data-p="ON">ON</button><button class="btn ghost" data-t="pump" data-p="OFF">OFF</button></div></div>
-    <div class="card"><h3>Solenoid Valve</h3><div class="val" id="valve">--</div>
-      <div class="row"><button class="btn" data-t="valve" data-p="ON">ON</button><button class="btn ghost" data-t="valve" data-p="OFF">OFF</button></div></div>
-    <div class="card"><h3>Water Flow</h3><div class="val" id="flow">--</div></div>
-    <div class="card"><h3>Total Water</h3><div class="val" id="total">--</div></div>
-  </div>
+    <section id="settings" class="sec" hidden>
+      <h2>Settings</h2>
+      <div class="card"><h4>🎨 Theme</h4><div class="row" id="themes"></div></div>
+      <div class="card"><h4>Ideal Ranges</h4><div id="rng"></div></div>
+      <p class="muted">Theme aur ranges is browser mein save hote hain.</p>
+    </section>
 
-  <h2>☀️ Solar</h2>
-  <div class="grid">
-    <div class="card"><h3>Vertical (commanded)</h3><div class="val" id="vcmd">--</div>
-      <p class="muted" id="vmove">--</p>
-      <div class="row"><button class="btn" data-t="solar/vertical" data-p="UP">UP</button><button class="btn ghost" data-t="solar/vertical" data-p="STOP">STOP</button><button class="btn" data-t="solar/vertical" data-p="DOWN">DOWN</button></div>
-      <div class="row angles" data-t="solar/vertical"></div></div>
-    <div class="card"><h3>Horizontal (commanded)</h3><div class="val" id="hcmd">--</div>
-      <p class="muted" id="hmove">--</p>
-      <div class="row"><button class="btn" data-t="solar/horizontal" data-p="LEFT">LEFT</button><button class="btn ghost" data-t="solar/horizontal" data-p="STOP">STOP</button><button class="btn" data-t="solar/horizontal" data-p="RIGHT">RIGHT</button></div>
-      <div class="row angles" data-t="solar/horizontal"></div></div>
-  </div>
-  <p class="muted">Angles shown are the <b>commanded</b> servo angle. There is no position feedback, so the real panel angle is not measured.</p>
+    <section id="sensors" class="sec" hidden>
+      <h2>Sensor Readings</h2>
+      <div class="card"><table><thead><tr><th>Sensor</th><th>Now</th><th>Ideal</th><th>Status</th></tr></thead><tbody id="tb"></tbody></table></div>
+    </section>
 
-  <h2>📡 Connectivity</h2>
-  <div class="grid">
-    <div class="card"><h3>ESP-NOW (transmitter)</h3><div class="val" id="espnow">--</div></div>
-    <div class="card"><h3>Device Wi-Fi</h3><div class="val" id="wifi">--</div></div>
-    <div class="card"><h3>MQTT (browser)</h3><div class="val" id="mqttState">--</div></div>
-  </div>
+    <section id="npk" class="sec" hidden>
+      <h2>NPK Nutrients</h2>
+      <div class="grid">
+        <div class="card"><h4>Nitrogen (N)</h4><b data-k="n">N/A</b></div>
+        <div class="card"><h4>Phosphorus (P)</h4><b data-k="p">N/A</b></div>
+        <div class="card"><h4>Potassium (K)</h4><b data-k="k">N/A</b></div>
+      </div>
+      <p class="muted">NPK sensor abhi transmitter code mein nahi hai, isliye N/A dikhega. Fake value nahi dikhayi jaati.</p>
+    </section>
 
-  <h2>🖥️ System</h2>
-  <div class="grid">
-    <div class="card"><h3>Date / Time (RTC)</h3><div class="val sm" id="ts">--</div></div>
-    <div class="card"><h3>Device ID</h3><div class="val sm" id="dev">--</div></div>
-    <div class="card"><h3>Last Data Update</h3><div class="val sm" id="last">--</div></div>
-  </div>
-  <p id="toast" class="muted"></p>
-</main>
+    <section id="solar" class="sec" hidden>
+      <h2>Solar Panel Control</h2>
+      <div class="grid">
+        <div class="card"><h4>Up / Down</h4><b data-k="v">--</b><p class="muted" data-k="vm"></p>
+          <div class="row"><button data-t="solar/vertical" data-p="UP">Up</button><button class="g" data-t="solar/vertical" data-p="STOP">Stop</button><button data-t="solar/vertical" data-p="DOWN">Down</button></div>
+          <div class="row ang" data-t="solar/vertical"></div></div>
+        <div class="card"><h4>Left / Right</h4><b data-k="h">--</b><p class="muted" data-k="hm"></p>
+          <div class="row"><button data-t="solar/horizontal" data-p="LEFT">Left</button><button class="g" data-t="solar/horizontal" data-p="STOP">Stop</button><button data-t="solar/horizontal" data-p="RIGHT">Right</button></div>
+          <div class="row ang" data-t="solar/horizontal"></div></div>
+      </div>
+      <p class="muted">Yeh <b>commanded</b> angle hai. Servo mein position feedback nahi hai, isliye asli panel angle measure nahi hota.</p>
+    </section>
+
+    <section id="valve" class="sec" hidden>
+      <h2>Valve / Motor Control</h2>
+      <div class="grid">
+        <div class="card"><h4>Water Valve</h4><b data-k="valve">--</b>
+          <div class="row"><button data-t="valve" data-p="ON">Open Valve</button><button class="g" data-t="valve" data-p="OFF">Close Valve</button></div></div>
+        <div class="card"><h4>Irrigation Motor</h4><b data-k="pump">--</b>
+          <div class="row"><button data-t="pump" data-p="ON">Start Motor</button><button class="g" data-t="pump" data-p="OFF">Stop Motor</button></div>
+          <p class="muted">Valve open hone par hi motor start hoti hai.</p></div>
+        <div class="card"><h4>Live Water Flow</h4><b data-k="flow">--</b></div>
+      </div>
+    </section>
+
+    <section id="history" class="sec" hidden>
+      <h2>History</h2>
+      <select id="hsel"><option value="soil">Soil Moisture %</option><option value="temp">Temperature °C</option><option value="hum">Humidity %</option></select>
+      <div class="card"><svg id="ch" viewBox="0 0 300 120" preserveAspectRatio="none"></svg><p class="muted" id="hs"></p></div>
+      <p class="muted">History sirf is browser mein save hoti hai, jab dashboard khula ho.</p>
+    </section>
+
+    <section id="notif" class="sec" hidden>
+      <h2>Notifications</h2>
+      <div class="card" id="nl"><p class="muted">Abhi koi alert nahi.</p></div>
+    </section>
+    <p id="toast" class="muted"></p>
+  </main>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/mqtt@5.10.1/dist/mqtt.min.js"></script>
 <script src="script.js"></script>
-</body>
-</html>
+</body></html>
