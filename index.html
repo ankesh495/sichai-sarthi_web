@@ -1,85 +1,82 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Sinchai Sarthi - Smart IoT Agriculture Platform</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0f3d2e">
+  <meta name="description" content="Sichai Sarthi connects smart irrigation and solar tracking for a greener tomorrow.">
+  <title>Sichai Sarthi - Smart Solar Tracking &amp; Automated Irrigation System</title>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/mqtt@5.10.1/dist/mqtt.min.js"></script>
+  <script defer src="script.js"></script>
 </head>
 <body>
-
-<!-- LOGIN (dashboard stays hidden until server confirms session) -->
-<section id="login">
-  <form id="loginForm" class="card login-card" autocomplete="on">
-    <h1>🌱 Sinchai Sarthi</h1>
-    <p class="muted">Smart Solar Tracking &amp; Automated Irrigation</p>
-    <input id="u" name="username" placeholder="Username" autocomplete="username" required>
-    <input id="p" name="password" type="password" placeholder="Password" autocomplete="current-password" required>
-    <button class="btn" type="submit">Login</button>
-    <p id="loginErr" class="err"></p>
-  </form>
-</section>
-
-<main id="dash" hidden>
-  <header>
-    <h1>🌱 Sinchai Sarthi</h1>
-    <div class="hdr-right">
-      <span id="liveBadge" class="badge off">OFFLINE</span>
-      <button class="btn small ghost" id="logout">Logout</button>
+  <svg class="svg-library" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>
+    <symbol id="icon-leaf" viewBox="0 0 24 24"><path d="M20 4C10 2 3 7 5 15c2 7 14 5 15-11Z"/><path d="M4 21 15 10M10 15v-4M10 15h5"/></symbol>
+    <symbol id="icon-drop" viewBox="0 0 24 24"><path d="M12 3S5 11 5 15a7 7 0 0 0 14 0c0-4-7-12-7-12Z"/><path d="M9 16a3 3 0 0 0 3 3"/></symbol>
+    <symbol id="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2"/></symbol>
+    <symbol id="icon-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></symbol>
+    <symbol id="icon-signal" viewBox="0 0 24 24"><path d="M3 8a15 15 0 0 1 18 0M6 12a10 10 0 0 1 12 0M9 16a5 5 0 0 1 6 0"/><circle cx="12" cy="20" r="1"/></symbol>
+    <symbol id="icon-chart" viewBox="0 0 24 24"><path d="M3 3v18h18M6 16l5-6 4 3 6-8"/></symbol>
+    <symbol id="icon-bell" viewBox="0 0 24 24"><path d="M5 17h14l-2-3V9a5 5 0 0 0-10 0v5l-2 3ZM10 21h4"/></symbol>
+    <symbol id="icon-settings" viewBox="0 0 24 24"><path d="M4 7h16M4 17h16"/><circle cx="9" cy="7" r="3"/><circle cx="15" cy="17" r="3"/></symbol>
+    <symbol id="icon-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 6v6l4 2"/></symbol>
+    <symbol id="icon-arrow" viewBox="0 0 24 24"><path d="M4 12h16M14 6l6 6-6 6"/></symbol>
+  </defs></svg>
+  <section id="welcome" class="welcome-screen">
+    <header class="welcome-header"><a class="brand" href="./"><span class="brand-icon"><svg><use href="#icon-leaf"/></svg></span><span>Sichai Sarthi<small>GROW SMART. GROW SUSTAINABLE.</small></span></a><span class="header-label"><span class="status-dot"></span> A smarter future for farming</span></header>
+    <main class="welcome-main">
+      <div class="hero" id="hero">
+        <div class="hero-content">
+          <span class="eyebrow light"><span class="status-dot"></span> THE FUTURE IS GROWING</span>
+          <h1>Sichai Sarthi <span>- Smart Solar Tracking &amp; Automated Irrigation System</span></h1>
+          <h2>Welcome, Farmer / Student!</h2>
+          <p class="hero-subtitle">Smart Farming | Better Yield | Sustainable Future</p>
+          <p class="hero-description">A little technology. A lot more possibility.<br>Care for your crops, conserve water, and follow the sun.</p>
+          <button id="startDashboard" class="btn start-button">Start Dashboard <svg><use href="#icon-arrow"/></svg></button>
+          <div class="hero-footnote"><span class="tiny-line"></span> Your farm. Connected. In control.</div>
+        </div>
+        <div class="farm-scene" aria-hidden="true"><div class="scene-sun"></div><div class="scene-hill hill-back"></div><div class="scene-hill hill-front"></div><div class="field-lines"></div><div class="solar-illustration"><div class="solar-grid"></div><div class="solar-stand"></div></div><div class="scene-label"><span class="status-dot"></span> Powered by nature. Guided by data.</div></div>
+      </div>
+      <div class="welcome-cards">
+        <article class="card clock-card"><div class="card-heading"><span class="icon-tile"><svg><use href="#icon-clock"/></svg></span><span class="eyebrow">RIGHT HERE, RIGHT NOW</span><span class="mini-pill">IST</span></div><div id="welcomeTime" class="welcome-time">—</div><p id="welcomeDate" class="muted">Loading local date…</p><p class="card-bottom">Every moment is a chance to grow.</p></article>
+        <article class="card weather-card"><div class="card-heading"><span class="icon-tile amber"><svg><use href="#icon-sun"/></svg></span><span class="eyebrow">YOUR LOCAL FORECAST</span><span class="mini-pill">LIVE WEATHER</span></div><div class="weather-main"><strong id="weatherTemp">N/A</strong><div><b>Jaipur, Rajasthan</b><p id="weatherDescription" class="muted">Fetching current weather…</p></div></div><div class="weather-details"><span>Humidity <b id="weatherHumidity">N/A</b></span><span>Wind <b id="weatherWind">N/A</b></span></div><p id="weatherUpdated" class="card-bottom">Weather by Open-Meteo · No API key needed</p></article>
+      </div>
+      <div class="feature-row"><div><svg><use href="#icon-drop"/></svg><span><b>Every drop matters</b><small>Thoughtful, automated irrigation</small></span></div><div><svg><use href="#icon-sun"/></svg><span><b>Follow the sunshine</b><small>Smarter solar panel control</small></span></div><div><svg><use href="#icon-signal"/></svg><span><b>Stay close to your crops</b><small>Real-time insights, wherever you are</small></span></div></div>
+    </main>
+    <footer class="welcome-footer"><span>Smart Technology for a Greener Tomorrow</span><span>SICHAI SARTHI <span class="footer-dot">·</span> ROOTED IN INNOVATION</span></footer>
+  </section>
+  <section id="login" class="login-screen" hidden>
+    <div class="login-intro"><span class="brand-icon"><svg><use href="#icon-leaf"/></svg></span><span class="eyebrow light">WELCOME BACK TO YOUR FARM</span><h1>Good things<br>are growing.</h1><p>Your smart farming companion is ready.<br>Sign in to see how your farm is doing.</p><button class="text-button" id="backWelcome">← Back to welcome</button></div>
+    <form id="loginForm" class="card login-card"><span class="eyebrow">SICHAI SARTHI</span><h2>Let's get connected.</h2><p class="muted">Sign in to your farming dashboard.</p><label for="username">Username</label><input id="username" name="username" autocomplete="username" required maxlength="100" placeholder="Enter your username"><label for="password">Password</label><input id="password" name="password" type="password" autocomplete="current-password" required maxlength="1024" placeholder="Enter your password"><button class="btn" id="loginButton" type="submit">Login <svg><use href="#icon-arrow"/></svg></button><p id="loginError" class="error" role="alert"></p><p class="login-security"><svg><use href="#icon-leaf"/></svg> A secure connection to a greener future.</p></form>
+  </section>
+  <div id="dashboard" class="dashboard" hidden>
+    <button id="sidebarBackdrop" class="sidebar-backdrop" aria-label="Close navigation" hidden></button>
+    <aside id="sidebar" class="sidebar"><a class="brand sidebar-brand" href="./"><span class="brand-icon"><svg><use href="#icon-leaf"/></svg></span><span>Sichai Sarthi<small>SMART FARMING COMPANION</small></span></a><p class="nav-label">YOUR WORKSPACE</p><nav aria-label="Dashboard sections">
+      <button class="nav-item active" data-section="overview"><svg><use href="#icon-grid"/></svg>Overview</button>
+      <button class="nav-item" data-section="settings"><svg><use href="#icon-settings"/></svg>Settings</button>
+      <button class="nav-item" data-section="sensors"><svg><use href="#icon-signal"/></svg>Sensor Readings</button>
+      <button class="nav-item" data-section="npk"><svg><use href="#icon-leaf"/></svg>NPK Nutrients</button>
+      <button class="nav-item" data-section="solar"><svg><use href="#icon-sun"/></svg>Solar Panel Control</button>
+      <button class="nav-item" data-section="controls"><svg><use href="#icon-drop"/></svg>Valve / Motor Control</button>
+      <button class="nav-item" data-section="history"><svg><use href="#icon-chart"/></svg>History</button>
+      <button class="nav-item" data-section="notifications"><svg><use href="#icon-bell"/></svg>Notifications <span id="unreadCount" class="unread-badge" hidden>0</span></button>
+    </nav><div class="sidebar-bottom"><span class="sidebar-leaf"><svg><use href="#icon-leaf"/></svg></span><b>Better farming starts here.</b><p>Small insights. Lasting impact.</p><span class="sidebar-version">SICHAI SARTHI · IoT DASHBOARD</span></div></aside>
+    <div class="dashboard-main"><header class="topbar"><div class="topbar-left"><button id="menuButton" class="menu-button" aria-controls="sidebar" aria-expanded="false" aria-label="Open navigation">☰</button><span>My workspace <span class="breadcrumb-divider">/</span> <b id="breadcrumb">Overview</b></span></div><div class="topbar-actions"><span id="liveBadge" class="badge offline" role="status">OFFLINE</span><button id="logout" class="btn outline small">Logout</button></div></header>
+      <main class="dashboard-content"><div class="section-title"><div><span class="eyebrow">A LITTLE INSIGHT. A BETTER HARVEST.</span><h1 id="sectionTitle">Your farm at a glance.</h1><p id="sectionSubtitle" class="muted">Stay in tune with your crops, water, and sunshine.</p></div><span id="dashboardDate" class="dashboard-date"></span></div>
+        <div id="dataNotice" class="notice">Waiting for your device. No live readings received yet.</div>
+        <section id="section-overview" class="dashboard-section" aria-label="Overview"><div class="section-label"><h2>Growing conditions</h2><span>Direct from your field</span></div><div id="environmentCards" class="metrics-grid"></div><div class="section-label"><h2>Water &amp; sunshine</h2><span>Your resources, in balance</span></div><div id="resourceCards" class="metrics-grid"></div><div class="section-label"><h2>Connected to your farm</h2><span>Device &amp; connection health</span></div><div id="connectionCards" class="metrics-grid"></div><p class="muted small-note">Solar angles are commanded values only. The real panel angle is not measured.</p></section>
+        <section id="section-settings" class="dashboard-section" hidden><form id="settingsForm" class="card settings-card"><h2>Make room for the ideal conditions.</h2><p class="muted">Set the ranges that suit your crops. Saved only in this browser.</p><div class="range-header"><span>Sensor</span><span>Minimum</span><span>Maximum</span></div><div id="rangeInputs"></div><button class="btn" type="submit">Save ideal ranges</button><p id="settingsMessage" role="status"></p></form></section>
+        <section id="section-sensors" class="dashboard-section" hidden><div class="card table-card"><table><thead><tr><th>Sensor</th><th>Now</th><th>Ideal</th><th>Status</th></tr></thead><tbody id="sensorRows"></tbody></table></div><p class="muted small-note">Status comparisons use your ideal ranges. Old readings are always marked.</p></section>
+        <section id="section-npk" class="dashboard-section" hidden><div id="npkCards" class="metrics-grid three-columns"></div><div class="notice">The NPK sensor is not implemented yet. Unavailable nutrient values display N/A.</div></section>
+        <section id="section-solar" class="dashboard-section" hidden><div class="notice">These are COMMANDED servo angles. There is no position feedback; the real panel angle is not measured.</div><div class="control-grid"><article class="card control-card"><span class="icon-tile amber"><svg><use href="#icon-sun"/></svg></span><h2>Up / Down</h2><div class="metric-value" data-reading="vertical">N/A</div><p class="muted" data-reading="verticalMove">N/A</p><div class="button-row"><button class="btn" data-command="solar/vertical" data-payload="UP">↑ Up</button><button class="btn outline" data-command="solar/vertical" data-payload="STOP">Stop</button><button class="btn" data-command="solar/vertical" data-payload="DOWN">↓ Down</button></div><p class="eyebrow angle-label">SET COMMANDED ANGLE</p><div class="angle-buttons" data-axis="vertical"></div></article><article class="card control-card"><span class="icon-tile amber"><svg><use href="#icon-sun"/></svg></span><h2>Left / Right</h2><div class="metric-value" data-reading="horizontal">N/A</div><p class="muted" data-reading="horizontalMove">N/A</p><div class="button-row"><button class="btn" data-command="solar/horizontal" data-payload="LEFT">← Left</button><button class="btn outline" data-command="solar/horizontal" data-payload="STOP">Stop</button><button class="btn" data-command="solar/horizontal" data-payload="RIGHT">Right →</button></div><p class="eyebrow angle-label">SET COMMANDED ANGLE</p><div class="angle-buttons" data-axis="horizontal"></div></article></div></section>
+        <section id="section-controls" class="dashboard-section" hidden><div class="notice">Valve must be open for motor to start. Commands are never queued while disconnected.</div><div class="control-grid"><article class="card control-card"><span class="icon-tile"><svg><use href="#icon-drop"/></svg></span><h2>Water valve</h2><div class="metric-value" data-reading="valve">N/A</div><div class="button-row"><button class="btn" data-command="valve" data-payload="ON">Open Valve</button><button class="btn outline" data-command="valve" data-payload="OFF">Close Valve</button></div></article><article class="card control-card"><span class="icon-tile"><svg><use href="#icon-settings"/></svg></span><h2>Motor / pump</h2><div class="metric-value" data-reading="pump">N/A</div><div class="button-row"><button class="btn" data-command="pump" data-payload="ON">Start Motor</button><button class="btn outline" data-command="pump" data-payload="OFF">Stop Motor</button></div></article><article class="card control-card"><h2>Live water flow</h2><div class="metric-value" data-reading="flow">NOT CALIBRATED</div><p class="muted">Measured flow · L/min</p></article></div></section>
+        <section id="section-history" class="dashboard-section" hidden><article class="card history-card"><div class="chart-header"><div><h2>See how your farm is growing.</h2><p class="muted">One reading every 30 seconds · Last 300 readings</p></div><label for="historySensor">Sensor <select id="historySensor"><option value="soil">Soil moisture</option><option value="temperature">Temperature</option><option value="humidity">Humidity</option></select></label></div><div id="historyChart" class="history-chart"></div><p id="historyStorage" class="muted small-note">History records only while the dashboard is open. Readings are saved in this browser.</p></article></section>
+        <section id="section-notifications" class="dashboard-section" hidden><div class="card notifications-card"><div class="chart-header"><h2>Updates from your field</h2><button id="markRead" class="btn outline small">Mark all as read</button></div><ul id="notificationList" class="notification-list"></ul><p class="muted small-note">Latest first · Up to 30 state-change alerts · This session only</p></div></section>
+        <footer class="dashboard-footer"><svg><use href="#icon-leaf"/></svg> Smart Technology for a Greener Tomorrow</footer>
+      </main>
     </div>
-  </header>
-
-  <h2>🌡️ Environment</h2>
-  <div class="grid">
-    <div class="card"><h3>Soil Moisture</h3><div class="val" id="soil">--</div></div>
-    <div class="card"><h3>Temperature</h3><div class="val" id="temp">--</div></div>
-    <div class="card"><h3>Humidity</h3><div class="val" id="hum">--</div></div>
-    <div class="card"><h3>Nitrogen (N)</h3><div class="val" id="npkN">N/A</div></div>
-    <div class="card"><h3>Phosphorus (P)</h3><div class="val" id="npkP">N/A</div></div>
-    <div class="card"><h3>Potassium (K)</h3><div class="val" id="npkK">N/A</div></div>
-    <div class="card"><h3>Rain</h3><div class="val" id="rain">--</div></div>
+    <div id="toast" class="toast" role="status" hidden></div>
   </div>
-
-  <h2>🚰 Irrigation</h2>
-  <div class="grid">
-    <div class="card"><h3>Pump</h3><div class="val" id="pump">--</div>
-      <div class="row"><button class="btn" data-t="pump" data-p="ON">ON</button><button class="btn ghost" data-t="pump" data-p="OFF">OFF</button></div></div>
-    <div class="card"><h3>Solenoid Valve</h3><div class="val" id="valve">--</div>
-      <div class="row"><button class="btn" data-t="valve" data-p="ON">ON</button><button class="btn ghost" data-t="valve" data-p="OFF">OFF</button></div></div>
-    <div class="card"><h3>Water Flow</h3><div class="val" id="flow">--</div></div>
-    <div class="card"><h3>Total Water</h3><div class="val" id="total">--</div></div>
-  </div>
-
-  <h2>☀️ Solar</h2>
-  <div class="grid">
-    <div class="card"><h3>Vertical (commanded)</h3><div class="val" id="vcmd">--</div>
-      <p class="muted" id="vmove">--</p>
-      <div class="row"><button class="btn" data-t="solar/vertical" data-p="UP">UP</button><button class="btn ghost" data-t="solar/vertical" data-p="STOP">STOP</button><button class="btn" data-t="solar/vertical" data-p="DOWN">DOWN</button></div>
-      <div class="row angles" data-t="solar/vertical"></div></div>
-    <div class="card"><h3>Horizontal (commanded)</h3><div class="val" id="hcmd">--</div>
-      <p class="muted" id="hmove">--</p>
-      <div class="row"><button class="btn" data-t="solar/horizontal" data-p="LEFT">LEFT</button><button class="btn ghost" data-t="solar/horizontal" data-p="STOP">STOP</button><button class="btn" data-t="solar/horizontal" data-p="RIGHT">RIGHT</button></div>
-      <div class="row angles" data-t="solar/horizontal"></div></div>
-  </div>
-  <p class="muted">Angles shown are the <b>commanded</b> servo angle. There is no position feedback, so the real panel angle is not measured.</p>
-
-  <h2>📡 Connectivity</h2>
-  <div class="grid">
-    <div class="card"><h3>ESP-NOW (transmitter)</h3><div class="val" id="espnow">--</div></div>
-    <div class="card"><h3>Device Wi-Fi</h3><div class="val" id="wifi">--</div></div>
-    <div class="card"><h3>MQTT (browser)</h3><div class="val" id="mqttState">--</div></div>
-  </div>
-
-  <h2>🖥️ System</h2>
-  <div class="grid">
-    <div class="card"><h3>Date / Time (RTC)</h3><div class="val sm" id="ts">--</div></div>
-    <div class="card"><h3>Device ID</h3><div class="val sm" id="dev">--</div></div>
-    <div class="card"><h3>Last Data Update</h3><div class="val sm" id="last">--</div></div>
-  </div>
-  <p id="toast" class="muted"></p>
-</main>
-
-<script src="https://cdn.jsdelivr.net/npm/mqtt@5.10.1/dist/mqtt.min.js"></script>
-<script src="script.js"></script>
 </body>
 </html>

@@ -2,12 +2,15 @@
   publish = "."
   functions = "netlify/functions"
 
+[[redirects]]
+  from = "/netlify/*"
+  to = "/index.html"
+  status = 404
+  force = true
+
 [[headers]]
   for = "/*"
   [headers.values]
     X-Frame-Options = "DENY"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "no-referrer"
-    Strict-Transport-Security = "max-age=31536000"
-    # connect-src must include your broker's wss host. Replace YOUR-CLUSTER.
-    Content-Security-Policy = "default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; connect-src 'self' wss://YOUR-CLUSTER.s1.eu.hivemq.cloud:8884"
