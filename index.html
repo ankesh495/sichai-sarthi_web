@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sinchai Sarthi - Smart IoT Agriculture Platform</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- LOGIN (dashboard stays hidden until server confirms session) -->
+<section id="login">
+  <form id="loginForm" class="card login-card" autocomplete="on">
+    <h1>🌱 Sinchai Sarthi</h1>
+    <p class="muted">Smart Solar Tracking &amp; Automated Irrigation</p>
+    <input id="u" name="username" placeholder="Username" autocomplete="username" required>
+    <input id="p" name="password" type="password" placeholder="Password" autocomplete="current-password" required>
+    <button class="btn" type="submit">Login</button>
+    <p id="loginErr" class="err"></p>
+  </form>
+</section>
+
+<main id="dash" hidden>
+  <header>
+    <h1>🌱 Sinchai Sarthi</h1>
+    <div class="hdr-right">
+      <span id="liveBadge" class="badge off">OFFLINE</span>
+      <button class="btn small ghost" id="logout">Logout</button>
+    </div>
+  </header>
+
+  <h2>🌡️ Environment</h2>
+  <div class="grid">
+    <div class="card"><h3>Soil Moisture</h3><div class="val" id="soil">--</div></div>
+    <div class="card"><h3>Temperature</h3><div class="val" id="temp">--</div></div>
+    <div class="card"><h3>Humidity</h3><div class="val" id="hum">--</div></div>
+    <div class="card"><h3>Nitrogen (N)</h3><div class="val" id="npkN">N/A</div></div>
+    <div class="card"><h3>Phosphorus (P)</h3><div class="val" id="npkP">N/A</div></div>
+    <div class="card"><h3>Potassium (K)</h3><div class="val" id="npkK">N/A</div></div>
+    <div class="card"><h3>Rain</h3><div class="val" id="rain">--</div></div>
+  </div>
+
+  <h2>🚰 Irrigation</h2>
+  <div class="grid">
+    <div class="card"><h3>Pump</h3><div class="val" id="pump">--</div>
+      <div class="row"><button class="btn" data-t="pump" data-p="ON">ON</button><button class="btn ghost" data-t="pump" data-p="OFF">OFF</button></div></div>
+    <div class="card"><h3>Solenoid Valve</h3><div class="val" id="valve">--</div>
+      <div class="row"><button class="btn" data-t="valve" data-p="ON">ON</button><button class="btn ghost" data-t="valve" data-p="OFF">OFF</button></div></div>
+    <div class="card"><h3>Water Flow</h3><div class="val" id="flow">--</div></div>
+    <div class="card"><h3>Total Water</h3><div class="val" id="total">--</div></div>
+  </div>
+
+  <h2>☀️ Solar</h2>
+  <div class="grid">
+    <div class="card"><h3>Vertical (commanded)</h3><div class="val" id="vcmd">--</div>
+      <p class="muted" id="vmove">--</p>
+      <div class="row"><button class="btn" data-t="solar/vertical" data-p="UP">UP</button><button class="btn ghost" data-t="solar/vertical" data-p="STOP">STOP</button><button class="btn" data-t="solar/vertical" data-p="DOWN">DOWN</button></div>
+      <div class="row angles" data-t="solar/vertical"></div></div>
+    <div class="card"><h3>Horizontal (commanded)</h3><div class="val" id="hcmd">--</div>
+      <p class="muted" id="hmove">--</p>
+      <div class="row"><button class="btn" data-t="solar/horizontal" data-p="LEFT">LEFT</button><button class="btn ghost" data-t="solar/horizontal" data-p="STOP">STOP</button><button class="btn" data-t="solar/horizontal" data-p="RIGHT">RIGHT</button></div>
+      <div class="row angles" data-t="solar/horizontal"></div></div>
+  </div>
+  <p class="muted">Angles shown are the <b>commanded</b> servo angle. There is no position feedback, so the real panel angle is not measured.</p>
+
+  <h2>📡 Connectivity</h2>
+  <div class="grid">
+    <div class="card"><h3>ESP-NOW (transmitter)</h3><div class="val" id="espnow">--</div></div>
+    <div class="card"><h3>Device Wi-Fi</h3><div class="val" id="wifi">--</div></div>
+    <div class="card"><h3>MQTT (browser)</h3><div class="val" id="mqttState">--</div></div>
+  </div>
+
+  <h2>🖥️ System</h2>
+  <div class="grid">
+    <div class="card"><h3>Date / Time (RTC)</h3><div class="val sm" id="ts">--</div></div>
+    <div class="card"><h3>Device ID</h3><div class="val sm" id="dev">--</div></div>
+    <div class="card"><h3>Last Data Update</h3><div class="val sm" id="last">--</div></div>
+  </div>
+  <p id="toast" class="muted"></p>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/mqtt@5.10.1/dist/mqtt.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
