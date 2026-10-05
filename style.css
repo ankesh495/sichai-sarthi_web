@@ -1,0 +1,25 @@
+/* Green agriculture theme. Merge with your existing style.css if you want the exact old look. */
+:root{--bg:#0f1f14;--card:#183222;--text:#e9f5ec;--muted:#9bb8a3;--accent:#3ddc84;--bad:#ff6b6b;--warn:#ffc857;--r:14px}
+@media (prefers-color-scheme:light){:root{--bg:#eef7f0;--card:#fff;--text:#12301d;--muted:#5b7a66;--accent:#1f9d55}}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--text)}
+main{max-width:1100px;margin:0 auto;padding:16px}
+header{display:flex;justify-content:space-between;align-items:center;gap:8px}
+h1{margin:0;font-size:1.4rem}h2{margin:24px 0 8px;font-size:1.1rem;color:var(--accent)}h3{margin:0 0 6px;font-size:.85rem;color:var(--muted);font-weight:600}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.card{background:var(--card);border-radius:var(--r);padding:14px;box-shadow:0 2px 8px #0003}
+.val{font-size:1.7rem;font-weight:700}.val.sm{font-size:1rem}
+.muted{color:var(--muted);font-size:.85rem;margin:4px 0}
+.row{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.btn{background:var(--accent);color:#06210f;border:0;border-radius:10px;padding:10px 14px;font-weight:700;cursor:pointer;flex:1;min-width:56px}
+.btn.ghost{background:transparent;color:var(--text);border:1px solid var(--muted)}
+.btn.small{flex:none;padding:6px 10px}.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn.ang{padding:6px;font-size:.8rem}
+.badge{padding:5px 10px;border-radius:99px;font-weight:700;font-size:.8rem}
+.badge.live{background:var(--accent);color:#06210f}.badge.stale{background:var(--warn);color:#2b2000}.badge.off{background:var(--bad);color:#2b0000}
+.hdr-right{display:flex;gap:8px;align-items:center}
+#login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:16px}
+.login-card{width:100%;max-width:360px;display:flex;flex-direction:column;gap:10px}
+input{padding:12px;border-radius:10px;border:1px solid var(--muted);background:transparent;color:var(--text);font-size:1rem}
+.err{color:var(--bad);min-height:1.2em;margin:0}
+.ok{color:var(--accent)}.bad{color:var(--bad)}.warn{color:var(--warn)}
