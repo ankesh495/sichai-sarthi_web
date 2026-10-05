@@ -5,10 +5,6 @@ const CFG = {
   CONTROL: { u: 'web-control', p: 'CHANGE_ME' },  // HiveMQ account: SIRF publish commands/#  (CHANGE_ME = controls band)
   CITY: 'Jaipur, Rajasthan', LAT: 26.91, LON: 75.79
 };
-// OPTIONAL password lock (abhi band). Basic lock hai, asli security nahi - dekhiye niche note.
-// Chalu karne ke liye enabled:true karein aur sha256 mein hash daalein (hash banane ka tarika alag message mein).
-const LOCK = { enabled: false, sha256: '' };   // hash of "username:password"
-
 const B = 'sinchai-sarthi/', LIVE = 15000, STALE = 45000;
 const $ = s => document.querySelector(s), $$ = s => document.querySelectorAll(s);
 const ls = (k, d) => { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch { return d; } };
@@ -36,15 +32,8 @@ fetch(`https://api.open-meteo.com/v1/forecast?latitude=${CFG.LAT}&longitude=${CF
   .then(r => r.json()).then(j => $('#wx').textContent = Math.round(j.current.temperature_2m) + '°C (live)')
   .catch(() => $('#wx').textContent = 'Weather unavailable');
 
-function openApp() { $('#home').hidden = true; $('#lock').hidden = true; $('#app').hidden = false; connect(); }
-$('#start').onclick = () => { if (LOCK.enabled && sessionStorage.getItem('unlocked') !== '1') $('#lock').hidden = false; else openApp(); };
-
-// ---------- optional lock ----------
-async function sha(s) { const b = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(s));
-  return [...new Uint8Array(b)].map(x => x.toString(16).padStart(2, '0')).join(''); }
-$('#lockForm').addEventListener('submit', async e => { e.preventDefault();
-  if (await sha($('#lu').value + ':' + $('#lp').value) === LOCK.sha256) { try { sessionStorage.setItem('unlocked', '1'); } catch {} openApp(); }
-  else $('#lerr').textContent = 'Wrong username or password'; $('#lp').value = ''; });
+function openApp() { $('#home').hidden = true; $('#app').hidden = false; connect(); }
+$('#start').onclick = openApp;
 
 // ---------- navigation ----------
 function show(id) { $$('.sec').forEach(s => s.hidden = s.id !== id);

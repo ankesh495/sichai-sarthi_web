@@ -18,8 +18,6 @@
 .box small{opacity:.7;font-size:.72rem}
 .start{background:var(--acc);color:#fff;border:0;border-radius:40px;padding:16px 40px;font-size:1.15rem;font-weight:700;cursor:pointer;box-shadow:0 0 20px var(--acc)}
 .tag{font-style:italic;margin-top:22px}
-#lock{position:fixed;inset:0;background:#000a;display:flex;align-items:center;justify-content:center;z-index:50;padding:16px}
-.lockcard{width:100%;max-width:340px;display:flex;flex-direction:column;gap:10px}
 #app{display:flex;min-height:100vh}
 #menu{width:235px;background:var(--side);padding:14px;display:flex;flex-direction:column;gap:6px;flex-shrink:0}
 #menu h3{color:#fff;margin:4px 0 14px;font-size:1.05rem}#menu h3 small{display:block;font-weight:400;font-size:.65rem;opacity:.7}
@@ -41,7 +39,6 @@ h2{margin:12px 0}h4{margin:0 0 6px;color:var(--mut);font-size:.85rem}
 .row button.th{background:var(--card);color:var(--tx);border:2px solid var(--line)}.row button.th.on{border-color:var(--acc)}
 select{flex:none;margin-bottom:10px}
 input{background:var(--card);color:var(--tx);border:1px solid var(--mut);width:90px;flex:none}
-#lock input{width:100%;flex:none}
 .badge{padding:5px 12px;border-radius:99px;font-weight:700;font-size:.8rem;color:#fff}
 .badge.live{background:var(--acc)}.badge.stale{background:var(--warn)}.badge.off{background:var(--bad)}
 table{width:100%;border-collapse:collapse}th,td{padding:9px;text-align:left;border-bottom:1px solid var(--line)}
