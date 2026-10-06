@@ -1,6 +1,6 @@
 // ================= CONFIG =================
 const CFG = {
-  WS_URL: 'sinchai-aae6cf6d.a02.usw2.aws.hivemq.cloud:8884/mqtt',   // HiveMQ host
+  WS_URL: 'wss.sinchai-aae6cf6d.a02.usw2.aws.hivemq.cloud:8884/mqtt',   // HiveMQ host
   VIEW:    { u: 'web-view',    p: '9887314280' },  // HiveMQ account: SIRF subscribe
   CONTROL: { u: 'web-control', p: '9887314280' },  // HiveMQ account: SIRF publish commands/#  (CHANGE_ME = controls band)
   CITY: 'Jaipur, Rajasthan', LAT: 26.91, LON: 75.79
