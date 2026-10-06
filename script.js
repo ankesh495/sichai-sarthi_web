@@ -1,8 +1,8 @@
 // ================= CONFIG =================
 const CFG = {
-  WS_URL: 'wss://YOUR-CLUSTER.s1.eu.hivemq.cloud:8884/mqtt',   // HiveMQ host
-  VIEW:    { u: 'web-view',    p: 'CHANGE_ME' },  // HiveMQ account: SIRF subscribe
-  CONTROL: { u: 'web-control', p: 'CHANGE_ME' },  // HiveMQ account: SIRF publish commands/#  (CHANGE_ME = controls band)
+  WS_URL: 'sinchai-aae6cf6d.a02.usw2.aws.hivemq.cloud:8884/mqtt',   // HiveMQ host
+  VIEW:    { u: 'web-view',    p: '9887314280' },  // HiveMQ account: SIRF subscribe
+  CONTROL: { u: 'web-control', p: '9887314280' },  // HiveMQ account: SIRF publish commands/#  (CHANGE_ME = controls band)
   CITY: 'Jaipur, Rajasthan', LAT: 26.91, LON: 75.79
 };
 const B = 'sinchai-sarthi/', LIVE = 15000, STALE = 45000;
