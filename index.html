@@ -1,1 +1,304 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="green"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sinchai Sarthi - Smart IoT Farming &amp; Irrigation System</title>
+<style>
+[data-theme=green]{--side:#0f3d2e;--sh:#1d5a45;--bg:#eef3f1;--card:#fff;--tx:#1d2b36;--mut:#6b7b86;--acc:#2e7d32;--ln:#e3e8ea;--h1:#6ab04c;--h2:#0f3d2e}
+[data-theme=dark]{--side:#0b1110;--sh:#1b2a26;--bg:#121a18;--card:#1c2825;--tx:#e6f2ee;--mut:#8fa59e;--acc:#3ddc84;--ln:#2b3b36;--h1:#16302a;--h2:#050a09}
+[data-theme=blue]{--side:#0d2b4a;--sh:#17456f;--bg:#eef3f8;--card:#fff;--tx:#14263a;--mut:#62758a;--acc:#1f6fd1;--ln:#e0e7ef;--h1:#4a90d9;--h2:#0d2b4a}
+[data-theme=orange]{--side:#4a2a0d;--sh:#6e3f14;--bg:#faf3ea;--card:#fff;--tx:#33200f;--mut:#8a7360;--acc:#e07b00;--ln:#eee0d0;--h1:#f0a040;--h2:#4a2a0d}
+:root{--bad:#d9534f;--warn:#f0ad4e}
+*{box-sizing:border-box}body{margin:0;padding-bottom:84px;font-family:system-ui,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--tx)}
+#home{min-height:100vh;display:flex;flex-direction:column;color:#fff;background:linear-gradient(#0a2d1fa0,#0a2d1fd0),linear-gradient(var(--h1),var(--h2))}
+.nav{display:flex;justify-content:space-between;align-items:center;padding:14px 22px;background:#0009;gap:10px;flex-wrap:wrap}
+.nav b{font-size:1.2rem}.nav small{display:block;font-size:.72rem;opacity:.85}
+.hero{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px}
+.info{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:16px 0}
+.box{background:#fffe;color:#1d2b36;padding:14px 18px;border-radius:14px;min-width:220px;text-align:left}
+.start{background:var(--acc);color:#fff;border:0;border-radius:40px;padding:16px 40px;font-size:1.15rem;font-weight:700;cursor:pointer;box-shadow:0 0 20px var(--acc)}
+.tb{background:#fff3;border:0;border-radius:99px;font-size:1.1rem;padding:6px 10px;cursor:pointer;color:inherit}
+#un{width:min(320px,90%);margin:6px 0 14px;text-align:center;background:#fffe;color:#1d2b36;border:0;border-radius:30px;padding:12px;font-size:1rem}
+#app{display:flex;min-height:100vh}
+#menu{width:235px;background:var(--side);padding:14px;display:flex;flex-direction:column;gap:6px;flex-shrink:0}
+#menu h3{color:#fff;margin:4px 0 14px;font-size:1.05rem}
+#menu button{background:none;border:0;color:#d4e6dd;text-align:left;padding:12px;border-radius:10px;font-size:.95rem;cursor:pointer}
+#menu button.on,#menu button:hover{background:var(--sh);color:#fff}
+#nc{background:var(--bad);color:#fff;border-radius:99px;padding:0 7px;font-style:normal;font-size:.75rem}
+main{flex:1;padding:16px;min-width:0}.top{display:flex;justify-content:space-between;align-items:center}
+.top .tb{background:var(--card);color:var(--tx);box-shadow:0 1px 4px #0002}#burger{display:none}
+h2{margin:12px 0}h4{margin:0 0 6px;color:var(--mut);font-size:.85rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+.card{background:var(--card);border-radius:14px;padding:14px;box-shadow:0 2px 8px #0001;margin-bottom:12px;overflow-x:auto}
+.card b{font-size:1.4rem}.card b.sm{font-size:.95rem}.mut{color:var(--mut);font-size:.85rem}
+.row{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+button.a,select,input{background:var(--acc);color:#fff;border:0;border-radius:9px;padding:10px 14px;font-weight:600;cursor:pointer;flex:1;font-size:.95rem}
+button.g{background:transparent;color:var(--tx);border:1px solid var(--mut)}
+.ang button{padding:6px;font-size:.8rem;background:var(--ln);color:var(--acc)}
+select{flex:none;margin-bottom:10px}input{background:var(--card);color:var(--tx);border:1px solid var(--mut);width:90px;flex:none}
+input.w{width:100%;max-width:340px}
+.badge{padding:5px 12px;border-radius:99px;font-weight:700;font-size:.8rem;color:#fff}
+.live{background:var(--acc)}.stale{background:var(--warn)}.off{background:var(--bad)}
+table{width:100%;border-collapse:collapse}th,td{padding:9px;text-align:left;border-bottom:1px solid var(--ln)}
+.ok{color:var(--acc)}.bad{color:var(--bad)}.warn{color:#c77700}
+.adv p{margin:0}
+svg#ch{width:100%;height:180px;background:var(--bg);border-radius:10px}
+#ai{position:fixed;left:0;right:0;bottom:0;z-index:30;padding:8px;display:flex;flex-direction:column;align-items:center;gap:6px;pointer-events:none}
+#ai>*{pointer-events:auto;width:100%;max-width:720px}
+#ao{max-height:38vh;overflow:auto;background:var(--card);color:var(--tx);border-radius:14px;padding:4px 12px;box-shadow:0 2px 14px #0004;font-size:.92rem}
+#ao p{margin:8px 0}
+#ab{display:flex;gap:4px;align-items:center;background:var(--card);border:1px solid var(--mut);border-radius:30px;padding:4px 6px;box-shadow:0 2px 14px #0004}
+#ab .tb{background:var(--ln);color:var(--tx)}
+#ab input{flex:1;width:auto;min-width:0;background:transparent;color:var(--tx);border:0;outline:0}
+@media(max-width:760px){#menu{position:fixed;inset:0 auto 0 0;z-index:9;transform:translateX(-100%);transition:.25s}#menu.open{transform:none}
+#burger{display:block;background:var(--side);color:#fff;border:0;border-radius:8px;padding:8px 12px}}
+</style></head><body>
+
+<section id="home">
+ <div class="nav"><div>🌱 <b>Sinchai Sarthi</b><small>Smart IoT Farming &amp; Irrigation System</small></div><button class="tb" id="th1">🎨</button></div>
+ <div class="hero"><h2>Welcome to Sinchai Sarthi</h2><p>Smart IoT Farming &amp; Irrigation System</p>
+  <input id="un" placeholder="Enter Username" maxlength="30">
+  <button class="start" id="start">START DASHBOARD</button>
+  <div class="info"><div class="box">📅 <b id="date">--</b><br><span id="time">--</span></div>
+  <div class="box">🌤️ <b id="city"></b><br><span id="wx">Loading...</span></div></div></div>
+</section>
+
+<div id="app" hidden>
+ <aside id="menu"><h3>🌱 Sinchai Sarthi</h3>
+  <button data-s="overview" class="on">🏠 Overview</button><button data-s="settings">⚙️ Settings &amp; Crop</button>
+  <button data-s="sensors">📊 Ideal vs Live</button><button data-s="npk">🧪 NPK Nutrients</button>
+  <button data-s="solar">☀️ Solar Panel Control</button><button data-s="valve">🚰 Valve / Motor Control</button>
+  <button data-s="history">📈 History</button><button data-s="notif">🔔 Notifications <i id="nc"></i></button></aside>
+ <main>
+  <div class="top"><button id="burger">☰</button><b id="hi" style="margin-left:8px"></b><div style="margin-left:auto;display:flex;gap:8px;align-items:center"><button class="tb" id="th2">🎨</button><span id="badge" class="badge off">OFFLINE</span></div></div>
+
+  <section id="overview" class="sec"><h2>Overview</h2>
+   <div class="card"><h4>🤖 Irrigation Advice (<span id="cn1"></span>)</h4><div class="adv"></div></div>
+   <div class="grid">
+   <div class="card"><h4>Soil Moisture</h4><b data-k="soil">--</b></div><div class="card"><h4>Temperature</h4><b data-k="temp">--</b></div>
+   <div class="card"><h4>Humidity</h4><b data-k="hum">--</b></div><div class="card"><h4>Rain</h4><b data-k="rain">--</b></div>
+   <div class="card"><h4>Water Valve</h4><b data-k="valve">--</b></div><div class="card"><h4>Motor / Pump</h4><b data-k="pump">--</b></div>
+   <div class="card"><h4>Water Flow</h4><b data-k="flow">--</b></div><div class="card"><h4>Total Water</h4><b data-k="total">--</b></div>
+   <div class="card"><h4>Weather (live)</h4><b data-k="wxs" class="sm">--</b></div>
+   <div class="card"><h4>Solar Up/Down (cmd)</h4><b data-k="v">--</b></div><div class="card"><h4>Solar Left/Right (cmd)</h4><b data-k="h">--</b></div>
+   <div class="card"><h4>Transmitter (ESP-NOW)</h4><b data-k="espnow">--</b></div><div class="card"><h4>ESP32 Wi-Fi</h4><b data-k="wifi">--</b></div>
+   <div class="card"><h4>MQTT</h4><b id="mq" class="sm">--</b></div><div class="card"><h4>Device Time (RTC)</h4><b data-k="ts" class="sm">--</b></div>
+   <div class="card"><h4>Last Update</h4><b data-k="last" class="sm">--</b></div></div></section>
+
+  <section id="settings" class="sec" hidden><h2>Settings &amp; Crop</h2>
+   <div class="card"><h4>👤 Username</h4><input class="w" id="un2" maxlength="30"></div>
+   <div class="card"><h4>🌾 Crop / Plant (type to search, or type any custom name)</h4>
+    <input class="w" id="crop" list="cl" placeholder="e.g. Wheat, Tomato, Mango"><datalist id="cl"></datalist>
+    <p class="mut" id="cm"></p></div>
+   <div class="card"><h4>Ideal Ranges (editable Min to Max)</h4><div id="rng"></div></div>
+   <div class="card"><h4>🎨 Theme</h4><div class="row" id="themes"></div></div></section>
+
+  <section id="sensors" class="sec" hidden><h2>Ideal vs Live</h2>
+   <div class="card"><h4>🤖 Motor / Valve Recommendation</h4><div class="adv"></div></div>
+   <div class="card"><table><thead><tr><th>Sensor</th><th>Ideal</th><th>Live</th><th>Status</th></tr></thead><tbody id="tbd"></tbody></table></div></section>
+
+  <section id="npk" class="sec" hidden><h2>NPK Nutrients</h2><div class="grid">
+   <div class="card"><h4>Nitrogen (N)</h4><b data-k="n">N/A</b></div><div class="card"><h4>Phosphorus (P)</h4><b data-k="p">N/A</b></div>
+   <div class="card"><h4>Potassium (K)</h4><b data-k="k">N/A</b></div></div>
+   <p class="mut">NPK sensor abhi transmitter code mein nahi hai, isliye N/A. Ideal range Settings mein crop ke hisaab se set hai.</p></section>
+
+  <section id="solar" class="sec" hidden><h2>Solar Panel Control</h2>
+   <div class="card"><h4>Mode</h4><b data-k="mode">--</b><p class="mut" data-k="sun"></p>
+    <div class="row"><button class="a" data-t="solar/mode" data-p="AUTO">Auto (time based)</button><button class="a g" data-t="solar/mode" data-p="MANUAL">Manual</button></div></div>
+   <div class="grid">
+    <div class="card"><h4>Up / Down</h4><b data-k="v">--</b><p class="mut" data-k="vm"></p>
+     <div class="row"><button class="a" data-t="solar/vertical" data-p="UP">Up</button><button class="a g" data-t="solar/vertical" data-p="STOP">Stop</button><button class="a" data-t="solar/vertical" data-p="DOWN">Down</button></div><div class="row ang" data-t="solar/vertical"></div></div>
+    <div class="card"><h4>Left / Right</h4><b data-k="h">--</b><p class="mut" data-k="hm"></p>
+     <div class="row"><button class="a" data-t="solar/horizontal" data-p="LEFT">Left</button><button class="a g" data-t="solar/horizontal" data-p="STOP">Stop</button><button class="a" data-t="solar/horizontal" data-p="RIGHT">Right</button></div><div class="row ang" data-t="solar/horizontal"></div></div></div>
+   <p class="mut">Ye commanded angle hai, asli panel angle measure nahi hota (servo mein feedback nahi). Manual command dabane par Auto band ho jaata hai.</p></section>
+
+  <section id="valve" class="sec" hidden><h2>Valve / Motor Control</h2><div class="grid">
+   <div class="card"><h4>Water Valve</h4><b data-k="valve">--</b><div class="row"><button class="a" data-t="valve" data-p="ON">Open Valve</button><button class="a g" data-t="valve" data-p="OFF">Close Valve</button></div></div>
+   <div class="card"><h4>Irrigation Motor</h4><b data-k="pump">--</b><div class="row"><button class="a" data-t="pump" data-p="ON">Start Motor</button><button class="a g" data-t="pump" data-p="OFF">Stop Motor</button></div><p class="mut">Valve open hone par hi motor start hoti hai.</p></div>
+   <div class="card"><h4>Live Water Flow</h4><b data-k="flow">--</b></div></div></section>
+
+  <section id="history" class="sec" hidden><h2>History</h2>
+   <select id="hsel"><option value="soil">Soil Moisture %</option><option value="temp">Temperature °C</option><option value="hum">Humidity %</option></select>
+   <div class="card"><svg id="ch" viewBox="0 0 300 120" preserveAspectRatio="none"></svg><p class="mut" id="hs"></p></div>
+   <p class="mut">History sirf is browser mein save hoti hai, jab dashboard khula ho.</p></section>
+
+  <section id="notif" class="sec" hidden><h2>Notifications</h2><div class="card" id="nl"><p class="mut">Abhi koi alert nahi.</p></div></section>
+  <p id="toast" class="mut"></p>
+ </main>
+</div>
+
+<div id="ai"><div id="ao" hidden></div>
+ <div id="ab"><button class="tb" id="mic" title="Voice">🎤</button><input id="aq" placeholder="🤖 Poochiye: kya motor chalu karein?"><button class="tb" id="as">➤</button><button class="tb" id="ax">✕</button></div></div>
+
+<script src="https://cdn.jsdelivr.net/npm/mqtt@5.10.1/dist/mqtt.min.js"></script>
+<script>
+/* ========== SIRF YE EK LINE BADLEIN: apna HiveMQ Cluster URL (https:// ke bina) ========== */
+const HOST = 'sinchai-aae6cf6d.a02.usw2.aws.hivemq.cloud:8884/mqtt';
+/* ================================================================================ */
+const VIEW = {u:'web-view', p:'98873142@A'}, CTRL = {u:'web-control', p:'9887314270@A'};
+const DEF={city:'Jaipur, Rajasthan',lat:26.91,lon:75.79};
+const WS='wss://'+HOST+':8884/mqtt', B='sinchai-sarthi/', LIVE=15000, STALE=45000;
+const $=s=>document.querySelector(s), $$=s=>document.querySelectorAll(s);
+const ls=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}}, sv=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch{}};
+let D=null,last=0,online=null,vc=null,cc=null,N=[],act={},W={},NAME=ls('user','');
+const KEYS=['soil','temp','hum','n','p','k'];
+const M={soil:['Soil Moisture','%'],temp:['Temperature','°C'],hum:['Humidity','%'],n:['Nitrogen (N)',' mg/kg'],p:['Phosphorus (P)',' mg/kg'],k:['Potassium (K)',' mg/kg']};
+/* Crop reference: name:temp:soil moisture:humidity:NPK level(L/M/H). Approximate general values - edit as per your field/soil test. */
+const CROPS=('Wheat:12-25:40-60:50-70:MMM|Rice (Paddy):20-35:70-90:70-90:HMM|Maize (Corn):18-32:50-70:50-70:HMM|Barley:12-25:40-60:50-70:MMM|Sorghum (Jowar):25-35:35-55:40-60:MLM|Pearl Millet (Bajra):25-35:30-50:40-60:MLM|Finger Millet (Ragi):20-30:40-60:50-70:MLM|Sugarcane:20-35:60-80:60-80:HMH|Cotton:21-32:40-60:50-70:HMM|Potato:15-22:60-80:60-80:HMH|Tomato:18-27:60-80:60-70:HMH|Onion:13-24:50-70:60-70:MMM|Garlic:12-24:50-65:60-70:MMM|Chilli:20-30:55-70:60-70:MMM|Brinjal (Eggplant):22-30:60-75:60-70:HMM|Okra (Bhindi):24-35:55-70:60-80:MMM|Cabbage:15-22:60-75:60-80:HMM|Cauliflower:15-22:60-75:60-80:HMM|Spinach:15-24:60-75:60-80:HMM|Carrot:15-22:55-70:60-70:MMH|Cucumber:20-30:60-75:60-80:MMM|Pumpkin:18-30:50-65:50-70:MMM|Watermelon:22-32:50-65:50-70:MMH|Mango:24-33:40-60:50-70:MLM|Banana:22-32:65-80:70-85:HMH|Apple:10-22:50-65:60-70:MMM|Orange / Citrus:15-30:50-65:50-70:MMM|Grapes:15-30:40-60:50-70:MMH|Guava:23-30:45-60:50-70:MLM|Papaya:22-32:55-70:60-80:HMH|Pomegranate:20-32:40-55:45-65:MMM|Soybean:20-30:50-65:55-75:LMM|Chickpea (Chana):15-25:35-50:40-60:LMM|Pigeon Pea (Arhar):20-30:40-55:50-70:LMM|Lentil (Masoor):15-25:35-50:40-60:LMM|Mustard:12-25:40-55:50-65:MMM|Groundnut (Peanut):22-30:45-60:50-70:LMM|Sunflower:18-28:45-60:50-65:MMM|Tea:15-28:65-80:70-90:HMM|Coffee:18-26:60-75:70-90:MMM|Coriander:15-25:50-65:55-70:MMM|Turmeric:20-30:60-75:70-85:MMH|Ginger:20-30:60-75:70-85:MMH|Strawberry:15-24:60-75:60-75:MMH|Lettuce:12-22:60-75:60-80:MMM|Peas:12-22:50-65:55-70:LMM|Beans:18-28:50-65:55-70:LMM|Jute:24-35:65-80:70-90:MLM|Flowers (Rose):15-28:50-65:50-70:MMM').split('|').map(s=>{const x=s.split(':'),r=i=>x[i].split('-').map(Number);return{n:x[0],t:r(1),s:r(2),h:r(3),q:x[4]}});
+const NPK={n:{L:[20,40],M:[40,80],H:[80,140]},p:{L:[10,20],M:[20,40],H:[40,60]},k:{L:[100,150],M:[150,250],H:[250,350]}};
+let CROP=ls('crop','Wheat');
+let R=ls('ranges',null)||rangesFor(CROP);
+function rangesFor(name){const c=CROPS.find(x=>x.n.toLowerCase()===name.toLowerCase());
+ if(!c)return R||{soil:[40,60],temp:[15,25],hum:[50,70],n:[40,80],p:[20,40],k:[150,250]};
+ return{soil:c.s,temp:c.t,hum:c.h,n:NPK.n[c.q[0]],p:NPK.p[c.q[1]],k:NPK.k[c.q[2]]}}
+KEYS.forEach(k=>{if(!R[k])R[k]=rangesFor('Wheat')[k]});
+let H=ls('hist',[]);
+
+const TH=[['green','🌿 Green'],['dark','🌙 Dark'],['blue','💧 Blue'],['orange','🌾 Orange']];
+function setTheme(t){document.documentElement.dataset.theme=t;sv('theme',t)}
+$('#themes').innerHTML=TH.map(([k,n])=>`<button class="a g" data-th="${k}">${n}</button>`).join('');
+$('#themes').onclick=e=>{const b=e.target.closest('[data-th]');if(b)setTheme(b.dataset.th)};
+const cyc=()=>{const i=TH.findIndex(t=>t[0]===document.documentElement.dataset.theme);setTheme(TH[(i+1)%TH.length][0])};
+$('#th1').onclick=cyc;$('#th2').onclick=cyc;setTheme(ls('theme','green'));
+
+function tick(){const n=new Date();$('#date').textContent=n.toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'short',year:'numeric'});$('#time').textContent=n.toLocaleTimeString('en-IN')}
+tick();setInterval(tick,1000);
+
+/* Live weather from browser location (falls back to Jaipur if denied) */
+function loadWx(lat,lon,city){$('#city').textContent=city;
+ fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,precipitation&daily=precipitation_probability_max&forecast_days=1&timezone=auto`).then(r=>r.json())
+ .then(j=>{W={t:Math.round(j.current.temperature_2m),h:j.current.relative_humidity_2m,pr:j.current.precipitation,rp:(j.daily.precipitation_probability_max||[])[0]??0};
+  $('#wx').textContent=`${W.t}°C, humidity ${W.h}%, rain chance ${W.rp}%`;render()}).catch(()=>$('#wx').textContent='Weather unavailable')}
+loadWx(DEF.lat,DEF.lon,DEF.city);
+if(navigator.geolocation)navigator.geolocation.getCurrentPosition(p=>loadWx(p.coords.latitude.toFixed(3),p.coords.longitude.toFixed(3),'📍 Your location'),()=>{},{timeout:8000});
+
+$('#un').value=NAME;$('#un2').value=NAME;
+$('#un2').oninput=e=>{NAME=e.target.value.trim();sv('user',NAME);$('#hi').textContent='🙏 '+(NAME||'Farmer')};
+$('#start').onclick=()=>{NAME=$('#un').value.trim()||NAME||'Farmer';sv('user',NAME);$('#un2').value=NAME;$('#hi').textContent='🙏 '+NAME;
+ $('#home').hidden=true;$('#app').hidden=false;connect();render();show(ls('cropSet',0)?'overview':'settings')};
+function show(id){window.scrollTo(0,0);$$('.sec').forEach(s=>s.hidden=s.id!==id);$$('#menu [data-s]').forEach(b=>b.classList.toggle('on',b.dataset.s===id));
+ $('#menu').classList.remove('open');if(id==='history')chart();if(id==='notif')$('#nc').textContent=''}
+$$('#menu [data-s]').forEach(b=>b.onclick=()=>show(b.dataset.s));$('#burger').onclick=()=>$('#menu').classList.toggle('open');
+
+const mq=(t,c)=>{$('#mq').textContent=t;$('#mq').className='sm '+c};
+const mk=c=>mqtt.connect(WS,{username:c.u,password:c.p,reconnectPeriod:4000,connectTimeout:10000,clientId:'web-'+Math.random().toString(16).slice(2,10)});
+function connect(){
+ if(vc)return;
+ if(HOST.includes('YOUR-CLUSTER')){mq('Cluster URL daalna baaki hai (HOST line)','bad');return}
+ vc=mk(VIEW);cc=mk(CTRL);
+ vc.on('connect',()=>{mq('CONNECTED','ok');vc.subscribe([B+'main/#',B+'transmitter/#',B+'status/#'])});
+ vc.on('reconnect',()=>mq('RECONNECTING...','warn'));vc.on('close',()=>mq('DISCONNECTED','bad'));
+ vc.on('error',e=>mq('ERROR: '+(e&&e.message||'credentials/URL check karein'),'bad'));
+ vc.on('message',(t,buf)=>{const m=buf.toString();
+  if(t===B+'status/main'){online=m==='online';if(!online)note('ESP32 offline ho gaya');render()}
+  else if(t===B+'main/telemetry'){try{D=JSON.parse(m);last=Date.now();record();alerts();render()}catch{}}});
+}
+function send(sub,p){
+ if(!cc||!cc.connected)return $('#toast').textContent='Control connect nahi - command NAHI gaya';
+ cc.publish(B+'commands/'+sub,p,{qos:1,retain:false},e=>$('#toast').textContent=e?'Send failed (permission?)':`Sent: ${sub} = ${p}`)}
+document.addEventListener('click',e=>{const b=e.target.closest('button[data-t]');if(b)return send(b.dataset.t,b.dataset.p);
+ const a=e.target.closest('button[data-act]');if(!a)return;
+ if(a.dataset.act==='on'){send('valve','ON');setTimeout(()=>send('pump','ON'),1500)}else{send('pump','OFF');setTimeout(()=>send('valve','OFF'),1500)}});
+$$('.ang').forEach(r=>[0,45,90,135,180].forEach(a=>{const b=document.createElement('button');b.textContent=a+'°';b.dataset.t=r.dataset.t;b.dataset.p=a;r.appendChild(b)}));
+
+const f=(v,u='',d=0)=>v==null?'N/A':Number(v).toFixed(d)+u;
+const val=k=>!D?null:k==='temp'?D.temperature:k==='hum'?D.humidity:k==='soil'?D.soil:(D.npk||{})[k];
+function fresh(){if(!last||online===false)return'off';const a=Date.now()-last;return a<LIVE?'live':a<STALE?'stale':'off'}
+function st(v,[a,b]){if(v==null)return['N/A',''];const w=(b-a)||1;
+ return v<a?(v<a-w*.5?['CRITICAL LOW','bad']:['LOW','warn']):v>b?(v>b+w*.5?['CRITICAL HIGH','bad']:['HIGH','warn']):['NORMAL','ok']}
+const abn=(k,v)=>k==='temp'?(v<-10||v>60):k==='hum'?(v<0||v>100):k==='soil'?(v<0||v>100):v<0;
+
+/* Rule-based irrigation advice from live sensors + crop ranges + weather. Returns [text, css class, action] */
+function advise(){
+ if(!D||fresh()!=='live')return['ESP32 ka live data nahi aa raha - sensor/Wi-Fi/MQTT check karein. Abhi motor ke baare mein salah nahi de sakte.','warn',0];
+ const s=D.soil,[a,b]=R.soil,on=D.pump==='ON',rp=W.rp||0;
+ if(s==null)return['Soil moisture sensor respond nahi kar raha - khet mein manually check karein.','bad',0];
+ if(D.rain==='RAIN')return[on?'Baarish ho rahi hai - Motor/Valve abhi band karein.':'Baarish ho rahi hai - Motor OFF hi rakhein.','warn',on?'off':0];
+ if(s<a){if(rp>=60&&!on)return[`Mitti sookhi hai (${s}%) par baarish ki sambhavna ${rp}% hai - thoda intezaar karein.`,'warn',0];
+  return on?[`Mitti abhi bhi sookhi (${s}%, ideal ${a}-${b}%) - motor chalne dein.`,'warn',0]:[`Soil moisture kam hai (${s}%, ideal ${a}-${b}%) - Motor/Valve abhi ON karna chahiye.`,'bad','on']}
+ if(s>b)return[on?`Mitti mein zyada nami (${s}%) - Motor/Valve band karein.`:`Mitti mein nami zyada hai (${s}%) - Motor OFF rakhein.`,'warn',on?'off':0];
+ return on?[`Moisture ideal range mein hai (${s}%) - motor ab band kar sakte hain.`,'ok','off']:[`Soil moisture kaafi hai (${s}%) - motor OFF rakhein.`,'ok',0]}
+
+function render(){
+ const s=fresh(),bd=$('#badge');bd.className='badge '+s;bd.textContent=s==='live'?'LIVE':s==='stale'?'STALE DATA':'OFFLINE';
+ $('#cn1').textContent=CROP||'Custom';
+ const[at,ac,aa]=advise();
+ $$('.adv').forEach(el=>el.innerHTML=`<p class="${ac}"><b>${at}</b></p>`+(aa?`<div class="row"><button class="a" data-act="${aa}">${aa==='on'?'Send: Valve + Motor ON':'Send: Motor + Valve OFF'}</button></div>`:''));
+ if(!D)return;
+ const o=s!=='live'?' (old)':'',so=D.solar||{},n=D.npk||{};
+ const V={soil:f(D.soil,' %'),temp:f(D.temperature,' °C',1),hum:f(D.humidity,' %'),rain:D.rain==='RAIN'?'RAIN DETECTED':'NO RAIN',
+  valve:D.valve==='ON'?'OPEN':'CLOSED',pump:D.pump,flow:D.flow==null?'NOT CALIBRATED':f(D.flow,' L/min',1),total:f(D.total,' L',1),
+  v:f(so.v_cmd,'°'),h:f(so.h_cmd,'°'),vm:'Movement: '+(so.v_move||'N/A'),hm:'Movement: '+(so.h_move||'N/A'),
+  mode:so.mode||'N/A',sun:so.sun_az==null?'':`Sooraj: azimuth ${so.sun_az}°, elevation ${so.sun_el}°`,
+  espnow:D.espnow?'CONNECTED':'DISCONNECTED',wifi:D.wifi?`CONNECTED (${D.rssi} dBm)`:'DOWN',
+  wxs:W.t==null?'--':`${W.t}°C, humidity ${W.h}%, rain chance ${W.rp}%`,
+  ts:(D.ts||'').replace('T',' '),last:new Date(last).toLocaleTimeString(),n:f(n.n,' mg/kg'),p:f(n.p,' mg/kg'),k:f(n.k,' mg/kg')};
+ const lv=['soil','temp','hum','rain','flow','total','v','h','n','p','k'];
+ $$('[data-k]').forEach(el=>{const k=el.dataset.k;if(V[k]===undefined)return;el.textContent=V[k]+(lv.includes(k)?o:'');el.style.opacity=o?.5:1});
+ const fl=D.flow==null?['N/A','']:D.pump==='ON'&&D.flow<=0?['CRITICAL: pump ON, no flow','bad']:['OK','ok'];
+ $('#tbd').innerHTML=KEYS.map(k=>{const v=val(k),[l,c]=st(v,R[k]),u=M[k][1];
+  return`<tr><td>${M[k][0]}</td><td>${R[k][0]}–${R[k][1]}${u}</td><td>${v==null?'N/A':v+u}</td><td class="${c}"><b>${v==null&&'npk'.includes(k)?'NO SENSOR':l}</b></td></tr>`}).join('')
+  +`<tr><td>Rain</td><td>Dry</td><td>${V.rain}</td><td class="${D.rain==='RAIN'?'warn':'ok'}"><b>${D.rain==='RAIN'?'RAIN':'NORMAL'}</b></td></tr>`
+  +`<tr><td>Water Flow</td><td>&gt; 0 when pump ON</td><td>${V.flow}</td><td class="${fl[1]}"><b>${fl[0]}</b></td></tr>`
+  +`<tr><td>Valve / Motor</td><td>As advised</td><td>${V.valve} / ${D.pump}</td><td class="${ac}"><b>${aa==='on'?'TURN ON':aa==='off'?'TURN OFF':'KEEP'}</b></td></tr>`;
+}
+setInterval(()=>{render();if(last){const o=fresh()==='off';if(o&&!act.stale){act.stale={s:1};note('Sensor data aana band ho gaya - ESP32/Wi-Fi/MQTT check karein')}else if(!o)delete act.stale}},2000);
+
+function buildRng(){$('#rng').innerHTML=KEYS.map(k=>`<p>${M[k][0]}${M[k][1]}: <input type="number" data-r="${k}" data-i="0" value="${R[k][0]}"> to <input type="number" data-r="${k}" data-i="1" value="${R[k][1]}"></p>`).join('')}
+$('#rng').onchange=e=>{const i=e.target;if(!i.dataset.r)return;R[i.dataset.r][+i.dataset.i]=+i.value;sv('ranges',R);render()};
+$('#cl').innerHTML=CROPS.map(c=>`<option value="${c.n}">`).join('');
+$('#crop').value=CROP;
+$('#crop').oninput=e=>{const v=e.target.value.trim();if(v.length<3)return;
+ fetch('https://en.wikipedia.org/w/api.php?action=opensearch&limit=8&format=json&origin=*&search='+encodeURIComponent(v)).then(r=>r.json())
+ .then(j=>{$('#cl').innerHTML=CROPS.map(c=>`<option value="${c.n}">`).join('')+(j[1]||[]).map(t=>{const o=document.createElement('option');o.value=t;return o.outerHTML}).join('')}).catch(()=>{})};
+$('#crop').onchange=e=>{const v=e.target.value.trim(),c=CROPS.find(x=>x.n.toLowerCase()===v.toLowerCase());if(!v)return;CROP=c?c.n:v;sv('crop',CROP);sv('cropSet',1);
+ if(c){R=rangesFor(CROP);sv('ranges',R);buildRng();$('#cm').textContent='Is crop ki ideal values load ho gayi hain (Temperature, Humidity, Soil Moisture, N, P, K). Neeche se badal sakte hain.'}
+ else $('#cm').innerHTML='Ye crop list mein nahi hai, purani values rakhi hain. <a href="https://www.google.com/search?q='+encodeURIComponent(v+' crop ideal temperature humidity soil moisture NPK')+'" target="_blank" rel="noopener" style="color:var(--acc)">Google par ideal values dekhein</a> aur neeche min/max khud daalein.';render()};
+buildRng();
+
+function record(){if(D.soil==null)return;const t=Date.now();if(H.length&&t-H[H.length-1].t<30000)return;
+ H.push({t,soil:D.soil,temp:D.temperature,hum:D.humidity});if(H.length>300)H.shift();sv('hist',H)}
+function chart(){const k=$('#hsel').value,p=H.map(x=>x[k]).filter(v=>v!=null),svg=$('#ch');
+ if(p.length<2){svg.innerHTML='';$('#hs').textContent='Abhi kam data hai, dashboard khula rakhiye.';return}
+ const mn=Math.min(...p),mx=Math.max(...p),r=(mx-mn)||1;
+ svg.innerHTML=`<polyline fill="none" stroke="var(--acc)" stroke-width="2" vector-effect="non-scaling-stroke" points="${p.map((v,i)=>`${i/(p.length-1)*300},${110-(v-mn)/r*100}`).join(' ')}"/>`;
+ $('#hs').textContent=`Points: ${p.length} | Min ${mn} | Max ${mx} | Latest ${p[p.length-1]}`}
+$('#hsel').onchange=chart;
+
+function note(m){N.unshift(new Date().toLocaleTimeString()+' - '+m);N=N.slice(0,30);$('#nl').innerHTML=N.map(x=>`<p>🔔 ${x}</p>`).join('');if($('#notif').hidden)$('#nc').textContent=Math.min(N.length,9)}
+/* Rule-based alerts: out of range, sensor silent, abnormal reading, no flow. Fires once per status change. */
+function alerts(){const A={};
+ KEYS.forEach(k=>{const v=val(k),nm=M[k][0],u=M[k][1];
+  if(v==null){if(!'npk'.includes(k))A[k]={s:'nr',m:nm+' sensor respond nahi kar raha'};return}
+  if(abn(k,v))return A[k]={s:'ab',m:`${nm} reading abnormal (${v}${u}) - sensor/wiring check karein`};
+  const[l]=st(v,R[k]);if(l!=='NORMAL')A[k]={s:l,m:`${nm} ${l}: ${v}${u} (ideal ${R[k][0]}–${R[k][1]}${u})`}});
+ if(D.rain==='RAIN')A.rain={s:1,m:'Baarish detect hui - motor band rakhein'};
+ if(!D.espnow)A.tx={s:1,m:'Transmitter disconnected'};
+ if(D.pump==='ON'&&D.flow!=null&&D.flow<=0)A.flow={s:1,m:'Motor ON hai par water flow nahi - pipe/valve/pump check karein'};
+ for(const k in A)if(!act[k]||act[k].s!==A[k].s)note(A[k].m);
+ act=A}
+
+/* ===== Floating AI assistant: 100% local rules, no paid API. Voice = browser Web Speech API ===== */
+function say(t,u){const p=document.createElement('p');p.textContent=(u?'🧑 ':'🤖 ')+t;if(u)p.style.color='var(--mut)';$('#ao').appendChild(p);$('#ao').hidden=false;$('#ao').scrollTop=1e5}
+function one(k){const v=val(k),u=M[k][1];if(!D)return'ESP32 ka data abhi nahi aaya.';
+ if(v==null)return`${M[k][0]}: reading nahi mili (sensor connected nahi ya respond nahi kar raha).`;
+ return`${M[k][0]}: ${v}${u}, ideal (${CROP||'custom'}) ${R[k][0]}–${R[k][1]}${u} → ${st(v,R[k])[0]}.`}
+function ans(q){q=q.toLowerCase();const h=(...w)=>w.some(x=>q.includes(x));
+ if(h('motor','pump','valve','paani','pani','water','irrigat','sinchai','chalu','chalao'))return advise()[0]+(D&&D.flow!=null?` Flow: ${f(D.flow,' L/min',1)}.`:'');
+ if(h('weather','mausam','baarish','barish','rain'))return W.t==null?'Weather abhi load nahi hua.':`Bahar ${W.t}°C, humidity ${W.h}%, aaj baarish ki sambhavna ${W.rp}%.`+(D&&D.rain==='RAIN'?' Rain sensor bhi baarish dikha raha hai.':'');
+ if(h('npk','nitrogen','phosph','potash','fertil','khad'))return['n','p','k'].map(one).join(' ')+' (NPK sensor transmitter mein na ho to N/A aayega.)';
+ if(h('soil','mitti','nami','moisture'))return one('soil');
+ if(h('temp','garmi','tapman'))return one('temp');
+ if(h('humid'))return one('hum');
+ if(h('crop','fasal','plant'))return`Selected crop: ${CROP||'custom'}. Ideal: soil ${R.soil[0]}–${R.soil[1]}%, temp ${R.temp[0]}–${R.temp[1]}°C, humidity ${R.hum[0]}–${R.hum[1]}%. Settings mein crop badal sakte hain.`;
+ if(h('solar','panel'))return D&&D.solar?`Solar mode: ${D.solar.mode}, up/down ${D.solar.v_cmd}°, left/right ${D.solar.h_cmd}°.`:'Solar data abhi nahi aaya.';
+ if(h('status','report','summary','sab','overall','kaisa','kaise','hello','hi','namaste'))return`${NAME||'Kisan bhai'}, ${advise()[0]} ${['soil','temp','hum'].map(one).join(' ')}`;
+ return'Main in sawaalon ka jawab de sakta hoon: motor/paani, soil, temperature, humidity, NPK, mausam, crop, solar, ya "status".'}
+function ask(){const q=$('#aq').value.trim();if(!q)return;$('#aq').value='';say(q,1);say(ans(q))}
+$('#as').onclick=ask;$('#aq').onkeydown=e=>{if(e.key==='Enter')ask()};$('#ax').onclick=()=>{$('#ao').innerHTML='';$('#ao').hidden=true};
+const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+$('#mic').onclick=()=>{if(!SR)return say('Is browser mein voice input nahi hai - Chrome/Edge use karein ya type karein.');
+ const r=new SR();r.lang='en-IN';r.onresult=e=>{$('#aq').value=e.results[0][0].transcript;ask()};
+ r.onend=()=>$('#mic').textContent='🎤';r.onerror=()=>say('Voice sun nahi paaya - mic permission check karein.');$('#mic').textContent='🔴';r.start()};
+</script>
+</body></html>
 
